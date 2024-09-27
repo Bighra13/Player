@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script language="JavaScript" type="text/javascript" CHARSET="UTF-8" src="jquery.min.js"></script>
+  <script language="JavaScript" type="text/javascript" src="xupload.js"></script>
+  <script language="JavaScript" type="text/javascript" CHARSET="UTF-8" src="jquery.cookie.js"></script>
+
+  <style>
+    body {
+      background: transparent;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-container {
+      width: 100%;
+      height: auto; /* Allow the height to adjust based on content */
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+      align-items: center;
+    }
+
+    .player-wrapper {
+      width: 50%; /* Default width for larger screens */
+      height: auto; /* Keeps the aspect ratio */
+    }
+
+    /* Media query for mobile devices */
+    @media (max-width: 768px) {
+      .player-wrapper {
+        width: 100%; /* Full width on mobile devices */
+      }
+    }
+
+    .url-input {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 5px;
+      margin-right: 5px;
+    }
+
+    button {
+      padding: 5px 10px;
+    }
+
+    .jw-spacer img {
+      width: 60px;
+      height: 23px;
+      float: right;
+      margin-top: 8px;
+    }
+
+    .jw-breakpoint-7 .jw-spacer img {
+      width: 70px !important;
+      height: 27px !important;
+      float: right;
+      margin-top: 13px !important;
+    }
+  </style>
+
+  <script>
+    $.cookie('file_id', '3141', { expires: 10 });
+    $.cookie('aff', '2', { expires: 10 });
+
+    function injectJs(url) {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.onload = function() {};
+      script.src = url;
+      document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
+  </script>
+
+  <script type="text/javascript">
+    var wid = '538795';
+    var uid = '260001';
+  </script>
+</head>
+<body>
+  <div class="video-container">
+    <div class="url-input">
+      <input type="text" id="m3u8-url" placeholder="Enter custom M3U8 URL" />
+      <button onclick="loadCustomVideo()">Load Custom Video</button>
+    </div>
+    
+    <div class="player-wrapper">
+      <div id="vplayer"></div>
+    </div>
+  </div>
+
+  <script type='text/javascript' src='jwplayer.js'></script>
+  <script type="text/javascript">
+    jwplayer.key = "8AgOIWAgrl1RsFxV4/x885zL8f0Amif16rkX5tHbB18YouW0pR/SQg==";
+  </script>
+  <script src="googima.js"></script>
+
+  <script type='text/javascript'>
+    var player = jwplayer("vplayer").setup({
+      sources: [{ file: "index.m3u8" }], // Default source
+      width: "100%", /* Full width of the player */
+      aspectratio: "16:9",
+      stretching: "uniform",
+      preload: 'auto',
+      androidhls: true,
+      hlshtml: true,
+      autostart: true, // Autoplay the video
+      primary: "html5",
+      mute: false
+    });
+
+    function loadCustomVideo() {
+      var customUrl = document.getElementById('m3u8-url').value;
+      if (customUrl) {
+        player.load([{ file: customUrl }]); // Load the custom URL
+      } else {
+        alert("Please enter a valid M3U8 URL.");
+      }
+    }
+
+    player.on('play', function() {
+      // Custom functionality can be added here
+    });
+
+    player.on('complete', function() {
+      // Actions to take when the video completes
+    });
+
+    player.on('ready', function() {
+      // Additional setup after the player is ready
+    });
+  </script>
+</body>
+</html>
